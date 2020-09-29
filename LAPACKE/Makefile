@@ -41,10 +41,20 @@
 # 'make cleanall'
 #
 TOPSRCDIR = ..
+
+FAASM_ROOT=/usr/local/code/faasm
+include $(FAASM_ROOT)/third-party/faasm-toolchain/Makefile.envs
 include $(TOPSRCDIR)/make.inc
+
+INSTALL_DIR=$(WASM_SYSROOT)/lib/wasm32-wasi
+INCLUDE_DIR=$(WASM_SYSROOT)/include
 
 .PHONY: all
 all: lapacke
+
+install:
+	cp include/*.h $(INCLUDE_DIR)/clapack
+	cp src/$(LAPACKELIB) $(INSTALL_DIR)/liblapacke.a
 
 .PHONY: lapacke
 lapacke: include/lapacke_mangling.h
